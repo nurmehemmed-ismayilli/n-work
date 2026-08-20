@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Work | Peşəkar Xidmətlər</title><style>
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.85);
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+    background-color: var(--bg-color);
+    color: #f8fafc;
+    font-family: system-ui, sans-serif;
+    padding: 20px;
+    padding-bottom: 100px;
+overflow-y: auto;
+height: 100vh;
+    margin: 0;
+}
+h1 {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+  background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 10px;
+    font-weight: 800;
+}
+.subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+.box, .card {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+}
+.price { color: #34d399; font-weight: 700; font-size: 18px; }
+.btn {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 12px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+.btn:active { transform: scale(0.97); }
+.btn-success { background: var(--success-gradient); }
+.btn-danger { background: var(--danger-gradient); }
+.btn-secondary {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border-color);
+}
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+    width: auto;
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 10px;
+}
+label {
+    display: block;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+input, textarea, select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    background: rgba(15,23,42,0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: #6366f1; }
+textarea { resize: vertical; height: 90px; }
+select option { background-color: #0f172a; color: white; }
+.hidden { display: none !important; }
+.toggle-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #818cf8;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+.error-alert {
+    background: rgba(239,68,68,0.2);
+    color: #fca5a5;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(239,68,68,0.3);
+}
+.toast-msg {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    z-index: 2000;
+    font-size: 14px;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+}
+.bottom-nav .nav-item {
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 12px;
+    transition: color 0.2s, transform 0.2s;
+}
+.bottom-nav .nav-item.active { color: #818cf8; transform: translateY(-2px); }
+.nav-add-btn {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(99,102,241,0.4);
+}
+.search-bar-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.search-bar-container input { margin: 0; }
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.status-pending { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+body:has(#authContainer:not(.hidden)) .bottom-nav { display: none !important; }
+/* --- YENİ: ÇAT İKONU VƏ QUTUSU (Mərhələ 1) --- */
+.floating-chat-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    display: flex;
+    display: none; /* Giriş edənə qədər gizli qalsın */
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+    cursor: pointer;
+    z-index: 999;
+    border: none;
+    transition: transform 0.2s;
+}
+.floating-chat-btn:active { transform: scale(0.9); }
+
+.chat-popup {
+    position: fixed;
+    bottom: 170px;
+    right: 20px;
+    width: 380px;
+    max-width: 90%;
+    height: 600px;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.chat-popup-header {
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-popup-header h4 { margin: 0; font-size: 16px; }
+.chat-popup-close {
+    background: none; border: none; color: #ef4444;
+    font-size: 20px; cursor: pointer;
+}
+.chat-popup-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+overflow-y: scroll;
+    gap: 10px;
+}
+.chat-popup-body p { margin: 0; font-size: 14px; color: var(--text-muted); }
+.chat-popup-input-area {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+}
+.chat-popup-input-area input {
+    flex: 1; padding: 8px 12px; border-radius: 20px; border: 1px solid var(--border-color);
+    background: rgba(0,0,0,0.2); color: white; outline: none; font-size: 14px; margin: 0;
+}
+.chat-popup-input-area button {
+    background: var(--primary-gradient); color: white; border: none;
+    padding: 0 15px; border-radius: 20px; cursor: pointer;
+}
+/* --- BİLDİRİŞ QRMIZI DAİRƏ --- */
+.badge-notification {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-color);
+    padding: 0 4px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+/* Çat ikonunun üstündəki dairə üçün (fərqli rəng ola bilər) */
+.badge-chat {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-color);
+    padding: 0 4px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+</style>
+</head>
+<body>
+<h1>N-Work</h1>
+<p class="subtitle">Peşəkar Xidmətlər və Bölgə Elanları Platforması</p>
+
+<div id="authContainer">
+    <div id="selectTypeBox" class="box">
+        <h2>Xoş gəldiniz!</h2>
+        <button class="btn btn-success" onclick="window.openRegister()">✨ Qeydiyyatdan Keç</button>
+        <p class="toggle-link" onclick="window.showLogin()">Artıq hesabınız var? Daxil olun</p>
+        <p class="toggle-link" onclick="window.resetPassword()" style="margin-top: -10px;">🔑 Şifrəni unutdunuz?</p>
+    </div>
+
+    <div id="registerBox" class="box hidden">
+        <h2>Yeni Hesab Yarat</h2>
+        <div id="regError" class="error-alert hidden"></div>
+        <label>Ad və Soyad:</label>
+        <input type="text" id="rName" placeholder="Nurməhəmməd İsmayıllı">
+        <label>Gmail:</label>
+        <input type="text" id="rContact" placeholder="ornek@gmail.com">
+        <label>Şifrə (min 6 simvol):</label>
+        <input type="password" id="rPass" placeholder="Şifrə təyin edin">
+        <button class="btn btn-success" onclick="window.completeRegistration()">Qeydiyyatı Tamamla</button>
+        <p class="toggle-link" onclick="window.backToSelect()">← Geri qayıt</p>
+    </div>
+
+    <div id="loginBox" class="box hidden">
+        <h2>Hesaba Giriş</h2>
+        <div id="loginError" class="error-alert hidden"></div>
+        <label>Gmail:</label>
+        <input type="text" id="loginContact" placeholder="ornek@gmail.com">
+        <label>Şifrə:</label>
+        <input type="password" id="loginPass" placeholder="Şifrənizi daxil edin">
+        <button class="btn btn-success" onclick="window.loginUser()">Daxil Ol</button>
+        <p class="toggle-link" onclick="window.showRegisterTypes()">Hesabınız yoxdur? Qeydiyyatdan keçin</p>
+    </div>
+</div><div id="appContainer" class="hidden">
+    <div id="tabHome" class="tab-content">
+        <h3 id="welcomeMsg" style="color:#34d399;"></h3>
+        <h3>📢 Ən Son Elanlar</h3>
+        <div id="homeServicesContainer"><p style="color:var(--text-muted)">Yüklənir...</p></div>
+    </div>
+
+    <div id="tabSearch" class="tab-content hidden">
+        <h3>🔍 Axtarış</h3>
+        <div class="box">
+            <div class="search-bar-container">
+                <input type="text" id="searchInput" placeholder="Açar söz...">
+                <button class="btn btn-secondary btn-sm" onclick="window.executeSearch()">Axtar</button>
+            </div>
+            <label>Kateqoriya:</label>
+            <select id="searchCategory" onchange="window.executeSearch()">
+                <option value="Hamısı">Bütün Kateqoriyalar</option>
+                <option value="İT və Proqramlaşdırma">İT və Proqramlaşdırma</option>
+                <option value="Dizayn və Qrafika">Dizayn və Qrafika</option>
+                <option value="Marketinq və SMM">Marketinq və SMM</option>
+                <option value="Oyun və Hesablar"> Oyun və Hesablar</option>
+                <option value="Digər">Digər</option>
+            </select>
+        </div>
+        <h3>📌 Nəticələr</h3>
+        <div id="searchServicesContainer"></div>
+    </div>
+
+    <div id="tabAdd" class="tab-content hidden">
+        <div class="box" style="border:1px dashed rgba(16,185,129,0.6);">
+            <h3 style="color:#10b981;">➕ Yeni Elan</h3>
+            <label>Başlıq:</label>
+            <input type="text" id="newServiceName" placeholder="Xidmətin adı">
+            <label>Kateqoriya:</label>
+            <select id="newServiceCategory">
+                <option value="İT və Proqramlaşdırma">İT və Proqramlaşdırma</option>
+                <option value="Dizayn və Qrafika">Dizayn və Qrafika</option>
+                <option value="Marketinq və SMM">Marketinq və SMM</option>
+                <option value="Oyun və Hesablar"> Oyun və Hesablar</option>
+                <option value="Digər">Digər</option>
+            </select>
+            <label>Bölgə:</label>
+            <select id="newServiceRegion">
+                <option value="Bakı">Bakı</option>
+                <option value="Gəncə">Gəncə</option>
+                <option value="Sumqayıt">Sumqayıt</option>
+                <option value="Mingəçevir" selected>Mingəçevir</option>
+                <option value="Digər">Digər</option>
+            </select>
+            <label>Qiymət:</label>
+            <input type="text" id="newServicePrice" placeholder="30 AZN">
+            <label>Əlaqə:</label>
+            <input type="text" id="newServicePhone" placeholder="050-000-00-00">
+            <label>Məlumat:</label>
+            <textarea id="newServiceDesc" placeholder="Ətraflı məlumat..."></textarea>
+            <button class="btn btn-success" onclick="window.addNewMarketService()">Elanı Paylaş</button>
+        </div>
+    </div>
+
+    <div id="tabNotifications" class="tab-content hidden">
+        <div class="box">
+            <h3 style="color:#818cf8;">🔔 Bildirişlər</h3>
+            <div id="notificationsListContainer">
+                <p style="color:var(--text-muted)">Hələ bildiriş yoxdur.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="tabProfile" class="tab-content hidden">
+        <div class="box" style="text-align:center;">
+            <div id="profileAvatarDisplay" style="width:80px;height:80px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold;color:#fff;background:#6366f1;"></div>
+            <h2 id="profileNameDisplay" style="color:#fff;"></h2>
+            <p id="profileStatusDisplay" style="font-size:13px;"></p>
+            <div style="text-align:left;">
+                <label>Profil Şəkli:</label>
+                <input type="file" id="profileImageInput" accept="image/*" onchange="window.uploadProfileImage(this)">
+            </div>
+            <div style="text-align:left;">
+                <label>Bio:</label>
+                <textarea id="editBio" placeholder="Haqqınızda..." style="width:100%;padding:8px;border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;border:1px solid rgba(255,255,255,0.1);"></textarea>
+            </div>
+            <button class="btn btn-success" onclick="window.saveProfileChanges()">Dəyişiklikləri Yadda Saxla</button>
+            <button class="btn btn-danger" onclick="window.logout()">Sistemdən Çıxış</button><!-- ⭐ MÜŞTƏRİ MƏMNUNİYYƏTİ (ULDUZ) -->
+<div style="text-align:left; margin-top:15px; border-top:1px solid var(--border-color); padding-top:15px;">
+    <label style="font-size:14px; color:#fbbf24;">⭐ Müştəri Məmnuniyyəti</label>
+    <div id="profileRatingDisplay" style="font-size:20px; color:#fbbf24; margin:8px 0;">
+        ⭐☆☆☆☆ (0 səs)
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <select id="anonRatingStar" style="width:auto; padding:8px; background:rgba(15,23,42,0.7); border:1px solid var(--border-color); border-radius:8px; color:white;">
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5" selected>⭐⭐⭐⭐⭐</option>
+        </select>
+        <input type="text" id="anonReviewText" placeholder="Anonim şərh yazın..." style="flex:1; min-width:150px; padding:8px; border-radius:8px; background:rgba(15,23,42,0.7); border:1px solid var(--border-color); color:white;">
+        <button class="btn btn-sm btn-success" onclick="window.submitAnonReview()" style="width:auto; padding:8px 16px; margin:0;">Göndər</button>
+    </div>
+    <div id="anonReviewsListContainer" style="margin-top:10px;">
+        <p style="color:var(--text-muted); font-size:12px;">Hələ şərh yoxdur.</p>
+    </div>
+</div>
+        </div>
+    </div>
+<div class="bottom-nav">
+    <button class="nav-item active" onclick="window.switchTab('tabHome', this)" style="position:relative;">
+        🏠 Ana
+    </button>
+    <button class="nav-item" onclick="window.switchTab('tabSearch', this)" style="position:relative;">
+        🔍 Axtar
+    </button>
+    <button class="nav-item nav-add-btn" onclick="window.switchTab('tabAdd', this)" style="position:relative;">
+        ➕
+    </button>
+    <button class="nav-item" onclick="window.switchTab('tabNotifications', this)" style="position:relative;">
+        🔔 Bildiriş
+        <span id="notificationBadge" class="badge-notification" style="display:none;">0</span>
+    </button>
+    <button class="nav-item" onclick="window.switchTab('tabProfile', this)" style="position:relative;">
+        👤 Profil
+    </button>
+</div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-storage.js";
+const firebaseConfig = {
+    apiKey: "AIzaSyCf1WmhKOsPN5zxHnJxjVWytHyz163XsYg",
+    authDomain: "n-work-6e957.firebaseapp.com",
+    projectId: "n-work-6e957",
+    storageBucket: "n-work-6e957.firebasestorage.app",
+    messagingSenderId: "719845445718",
+    appId: "1:719845445718:web:b5e5be8f9ff7c4fd046bf7",
+    measurementId: "G-RHH3492939"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+  
+window.storage = storage;
+window.auth = auth;
+window.db = db;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.onAuthStateChanged = onAuthStateChanged;
+window.signOut = signOut;
+window.collection = collection;
+window.getDocs = getDocs;
+window.addDoc = addDoc;
+window.doc = doc;
+window.onSnapshot = onSnapshot;
+window.sendPasswordResetEmail = sendPasswordResetEmail;
+window.deleteDoc = deleteDoc;
+window.updateDoc = updateDoc;
+
+console.log('✅ Firebase hazırdır!');
+
+function showToast(message) {
+    const existing = document.querySelector('.toast-msg');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+window.openRegister = function() {
+    document.getElementById('selectTypeBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.remove('hidden');
+};
+
+window.showLogin = function() {
+    document.getElementById('selectTypeBox').classList.add('hidden');
+    document.getElementById('loginBox').classList.remove('hidden');
+};
+
+window.showRegisterTypes = function() {
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('selectTypeBox').classList.remove('hidden');
+};
+
+window.backToSelect = function() {
+    document.getElementById('registerBox').classList.add('hidden');
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('selectTypeBox').classList.remove('hidden');
+};
+
+window.switchTab = function(tabId, btnElement) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById(tabId).classList.remove('hidden');
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (btnElement) btnElement.classList.add('active');
+    if (tabId === 'tabHome') window.loadHomeServices();
+  if (tabId === 'tabNotifications') window.loadNotifications();
+    if (tabId === 'tabProfile') window.loadUserProfile();
+};
+
+window.completeRegistration = async function() {
+    const name = document.getElementById('rName').value.trim();
+    const contact = document.getElementById('rContact').value.trim();
+    const pass = document.getElementById('rPass').value.trim();
+    const errorDiv = document.getElementById('regError');
+
+    if (!name || !contact || !pass) {
+        errorDiv.classList.remove('hidden');
+        errorDiv.textContent = '⚠️ Zəhmət olmasa, bütün sahələri doldurun!';
+        return;
+    }
+    if (pass.length < 6) {
+        errorDiv.classList.remove('hidden');
+        errorDiv.textContent = '⚠️ Şifrə ən az 6 simvol olmalıdır!';
+        return;
+    }
+
+    errorDiv.classList.add('hidden');
+
+    try {
+        const userCredential = await window.createUserWithEmailAndPassword(window.auth, contact, pass);
+        const user = userCredential.user;
+
+        await window.addDoc(window.collection(window.db, 'users'), {
+            uid: user.uid,
+            name: name,
+            contact: contact,
+            bio: '',
+            photoURL: '',
+            createdAt: new Date().toISOString()
+        });
+
+        showToast('✅ Qeydiyyat uğurlu!');
+        // Qeydiyyat uğurlu olduqdan dərhal sonra təsdiq emaili göndər
+await sendEmailVerification(user);
+        document.getElementById('registerBox').classList.add('hidden');
+        document.getElementById('selectTypeBox').classList.remove('hidden');
+        window.showLogin();
+    } catch (error) {
+        errorDiv.classList.remove('hidden');
+        errorDiv.textContent = 'Xəta: ' + error.message;
+    }
+};
+
+window.loginUser = async function() {
+    const contact = document.getElementById('loginContact').value.trim();
+    const pass = document.getElementById('loginPass').value.trim();
+    const errorDiv = document.getElementById('loginError');
+
+    if (!contact || !pass) {
+        errorDiv.classList.remove('hidden');
+        errorDiv.textContent = '⚠️ Zəhmət olmasa, Gmail və şifrəni daxil edin!';
+        return;
+    }
+
+    errorDiv.classList.add('hidden');
+
+    try {
+        await window.signInWithEmailAndPassword(window.auth, contact, pass);
+        showToast('✅ Giriş uğurlu!');
+        document.getElementById('authContainer').classList.add('hidden');
+        document.getElementById('appContainer').classList.remove('hidden');
+        window.loadUserProfile();
+        window.loadHomeServices();
+    } catch (error) {
+        errorDiv.classList.remove('hidden');
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+            errorDiv.textContent = '❌ Gmail və ya şifrə səhvdir!';
+        } else if (error.code === 'auth/user-not-found') {
+            errorDiv.textContent = '❌ Bu Gmail ilə qeydiyyatdan keçməmisiniz!';
+        } else if (error.code === 'auth/invalid-email') {
+            errorDiv.textContent = '❌ Gmail ünvanı düzgün deyil!';
+        } else if (error.code === 'auth/too-many-requests') {
+            errorDiv.textContent = '❌ Çox sayda uğursuz cəhd! Bir az sonra cəhd edin.';
+        } else {
+            errorDiv.textContent = '❌ Xəta: ' + error.message;
+        }
+    }
+};
+
+window.logout = function() {
+    window.signOut(window.auth);
+    document.getElementById('appContainer').classList.add('hidden');
+    document.getElementById('authContainer').classList.remove('hidden');
+    document.getElementById('selectTypeBox').classList.remove('hidden');
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.add('hidden');
+    showToast('👋 Uğurla sistemdən çıxış etdiniz!');
+};
+
+window.loadUserProfile = async function() {
+    const user = window.auth.currentUser;
+    if (!user) return;
+
+    try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, 'users'));
+        let userData = null;
+        querySnapshot.forEach(doc => {
+            if (doc.data().uid === user.uid) {
+                userData = { id: doc.id, ...doc.data() };
+            }
+        });
+
+        if (userData) {
+            document.getElementById('profileNameDisplay').textContent = userData.name || 'İstifadəçi';
+            document.getElementById('profileStatusDisplay').textContent = userData.bio || 'Haqqımda məlumat yoxdur';
+            document.getElementById('editBio').value = userData.bio || '';
+            document.getElementById('welcomeMsg').textContent = '👋 Salam, ' + (userData.name || 'İstifadəçi') + '!';
+
+            const av = document.getElementById('profileAvatarDisplay');
+if (userData.photoURL) {
+    av.style.backgroundImage = `url(${userData.photoURL})`;
+    av.style.backgroundColor = 'transparent';
+    av.textContent = '';
+} else {
+    av.style.backgroundImage = '';
+    
+    // Ad və soyadın baş hərflərini çıxart
+    let initials = '?';
+    let bgColor = '#6366f1'; // Default mavi rəng
+    
+    if (userData.name) {
+        const nameParts = userData.name.trim().split(' ');
+        if (nameParts.length >= 2) {
+            // Əgər "Nurməhəmməd İsmayıllı" yazıbsa -> "Nİ" olacaq
+            initials = (nameParts[0].charAt(0) + nameParts[1].charAt(0)).toUpperCase();
+        } else {
+            // Tək söz yazıbsa (məsələn "Nurlan") -> "N" olacaq
+            initials = userData.name.charAt(0).toUpperCase();
+        }
+
+        // --- YENİ: Hər istifadəçi üçün unikal rəng (UID-yə görə) ---
+const colors = ['#6366f1', '#f59e0b', '#ef4444', '#10b981', '#8b5cf6', '#ec4899', '#3b82f6'];
+const uidHash = user.uid.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+const colorIndex = uidHash % colors.length;
+bgColor = colors[colorIndex];
+    }
+
+    av.textContent = initials;
+    av.style.backgroundColor = bgColor;
+    av.style.color = '#ffffff';
+}
+        }
+    } catch (error) {
+        console.error('Profil xətası:', error);
+    }
+};
+
+window.saveProfileChanges = async function() {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Əvvəlcə daxil olun!');
+        return;
+    }
+
+    const bio = document.getElementById('editBio').value.trim();
+
+    try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, 'users'));
+        let docId = null;
+        querySnapshot.forEach(doc => {
+            if (doc.data().uid === user.uid) {
+                docId = doc.id;
+            }
+        });
+
+        if (docId) {
+            await window.updateDoc(window.doc(window.db, 'users', docId), { bio: bio });
+            showToast('✅ Profil yeniləndi!');
+            window.loadUserProfile();
+        } else {
+            showToast('❌ İstifadəçi tapılmadı!');
+        }
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+window.loadHomeServices = async function() {
+    const container = document.getElementById('homeServicesContainer');
+    container.innerHTML = '<p style="color:var(--text-muted)">Yüklənir...</p>';
+
+    try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, 'services'));
+        let html = '';
+        let count = 0;
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+          data.id = doc.id;
+            html += `
+                <div class="card">
+                    <h3>${data.name || 'Adsız elan'}</h3>
+                    <span class="status-badge status-pending">${data.category || 'Kateqoriya yoxdur'}</span>
+                    <span style="float:right;color:var(--text-muted);font-size:13px;">📍 ${data.region || 'Bölgə yoxdur'}</span>
+                    <p style="font-size:14px;color:var(--text-muted);margin:8px 0;">${data.description || ''}</p>
+                    <div><span class="price">${data.price || 'Qiymət yoxdur'}</span></div>
+                    <p style="font-size:12px; color:var(--text-muted); margin-top:5px;">👤 ${data.userName || 'Anonim'}</p>
+                    ${data.phone ? `<p style="font-size:13px;color:#34d399;">📞 ${data.phone}</p>` : ''}
+                    ${data.phone ? `
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:5px;">
+        <a href="https://wa.me/994${data.phone.replace(/[^0-9]/g, '')}" target="_blank" style="background:#25D366; color:white; padding:6px 15px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:bold; display:inline-block;">📲 WhatsApp</a>
+        <button onclick="window.openChat('${data.userId}')" style="background:#6366f1; color:white; padding:6px 15px; border-radius:8px; border:none; cursor:pointer; font-size:13px; font-weight:bold; display:inline-block;">💬 Mesaj Göndər</button>
+    </div>
+` : `<button onclick="window.openChat('${data.userId}')" style="background:#6366f1; color:white; padding:6px 15px; border-radius:8px; border:none; cursor:pointer; font-size:13px; font-weight:bold; display:inline-block; margin-top:5px;">💬 Mesaj Göndər</button>`}
+                    <p style="font-size:11px;color:var(--text-muted);">📅 ${data.createdAt || ''}</p>
+                    ${data.userId === window.auth.currentUser?.uid ? `<button onclick="window.openDeleteModal('${data.id}')" style="margin-top:5px; background:#ef4444; color:white; border:none; padding:4px 12px; border-radius:8px; cursor:pointer; font-size:12px;">🗑️ Sil</button>` : ''}
+                    <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border-color);">
+    <textarea id="reviewInput_${data.id}" placeholder="Bu elana şərh yaz..." style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color); margin-bottom:5px; height:50px;"></textarea>
+    <button onclick="window.submitReview('${data.id}')" style="background:var(--success-gradient); color:white; border:none; padding:5px 15px; border-radius:8px; cursor:pointer; font-size:13px; float:right;">Göndər</button>
+    <div id="reviewsContainer_${data.id}" style="margin-top:5px; font-size:13px; color:var(--text-muted);">
+        <!-- Şərhlər burada görünəcək -->
+    </div>
+</div>
+                </div>
+            `;
+            count++;
+            window.loadReviewsForService(data.id);
+        });
+
+        container.innerHTML = count === 0 ? '<p style="color:var(--text-muted)">Hələ elan yoxdur. Birinci olun!</p>' : html;
+    } catch (error) {
+        container.innerHTML = '<p style="color:#ef4444;">Xəta: ' + error.message + '</p>';
+    }
+};
+
+window.addNewMarketService = async function() {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Əvvəlcə daxil olun!');
+        return;
+    }
+
+    const name = document.getElementById('newServiceName').value.trim();
+    const category = document.getElementById('newServiceCategory').value;
+    const region = document.getElementById('newServiceRegion').value;
+    const price = document.getElementById('newServicePrice').value.trim();
+    const phone = document.getElementById('newServicePhone').value.trim();
+    const description = document.getElementById('newServiceDesc').value.trim();
+
+    if (!name || !description) {
+        showToast('⚠️ Başlıq və məlumat daxil edin!');
+        return;
+    }
+
+    try {
+        await window.addDoc(window.collection(window.db, 'services'), {
+            name: name,
+            category: category,
+            region: region,
+            price: price || 'Qiymət göstərilməyib',
+            phone: phone || '',
+            description: description,
+            userId: user.uid,
+          userName: user.displayName || user.email || 'Anonim',
+            createdAt: new Date().toLocaleString('az-AZ'),
+            timestamp: Date.now()
+        });
+        // İstifadəçini "Satıcı" (Mavi Tik) et
+const usersSnapshot = await window.getDocs(window.collection(window.db, 'users'));
+usersSnapshot.forEach(async (doc) => {
+    if (doc.data().uid === user.uid) {
+        await window.updateDoc(window.doc(window.db, 'users', doc.id), { 
+            isSeller: true 
+        });
+    }
+});
+
+        // İstifadəçinin adını pəncərədə göstərmək üçün
+const userDataSnap = await window.getDocs(window.collection(window.db, 'users'));
+let displayName = 'İstifadəçi';
+userDataSnap.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+        displayName = doc.data().name || 'İstifadəçi';
+    }
+});
+
+// Təbrik pəncərəsini aç və adı yaz
+document.getElementById('modalUserName').textContent = `🎉 Təbriklər, ${displayName}!`;
+document.getElementById('successModal').style.display = 'flex';
+        document.getElementById('newServiceName').value = '';
+        document.getElementById('newServiceDesc').value = '';
+        document.getElementById('newServicePrice').value = '';
+        document.getElementById('newServicePhone').value = '';
+        window.switchTab('tabHome', document.querySelector('.nav-item'));
+        window.loadHomeServices();
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+window.getDocs(window.collection(window.db, 'services'))
+        .then(snapshot => {
+            let results = [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                data.id = doc.id; 
+                const matchesKeyword = !keyword ||
+                    data.name?.toLowerCase().includes(keyword) ||
+                    data.description?.toLowerCase().includes(keyword);
+                const matchesCategory = category === 'Hamısı' || data.category === category;
+
+                if (matchesKeyword && matchesCategory) {
+                    results.push(data);
+                }
+            });
+
+            if (results.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted)">Heç nə tapılmadı.</p>';
+                return;
+            }
+
+            let html = '';
+            results.forEach(data => {
+                html += `
+                    <div class="card">
+                        <h3>${data.name || 'Adsız'}</h3>
+                        <span class="status-badge status-pending">${data.category || ''}</span>
+                        <p style="font-size:14px;color:var(--text-muted);margin:8px 0;">${data.description || ''}</p>
+                        <div><span class="price">${data.price || ''}</span></div>
+${data.phone ? `<div style="margin-top:10px;">
+    <a href="https://wa.me/994${data.phone.replace(/[^0-9]/g, '')}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:6px 15px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:bold;">📲 WhatsApp</a>
+    <button onclick="window.openChat('${data.userId}')" style="display:inline-block; background:#6366f1; color:white; padding:6px 15px; border-radius:8px; border:none; font-size:13px; font-weight:bold;">💬 Chat</button>
+</div>` : ''}
+                `;
+            });
+            container.innerHTML = html;
+        })
+        .catch(err => {
+            container.innerHTML = '<p style="color:#ef4444;">Xəta: ' + err.message + '</p>';
+        });
+
+window.onAuthStateChanged(window.auth, function(user) {
+    console.log('Auth state:', user ? 'Daxil oldu' : 'Çıxış etdi');
+    if (user) {
+        document.querySelector('.floating-chat-btn').style.display = 'flex';
+        document.getElementById('authContainer').classList.add('hidden');
+        document.getElementById('appContainer').classList.remove('hidden');
+        window.loadUserProfile();
+        window.loadHomeServices();
+    } else {
+        document.querySelector('.floating-chat-btn').style.display = 'none';
+        document.getElementById('authContainer').classList.remove('hidden');
+        document.getElementById('appContainer').classList.add('hidden');
+        document.getElementById('selectTypeBox').classList.remove('hidden');
+        document.getElementById('loginBox').classList.add('hidden');
+        document.getElementById('registerBox').classList.add('hidden');
+    }
+});
+// Təbrik pəncərəsini bağlamaq üçün funksiya
+window.closeSuccessModal = function() {
+    document.getElementById('successModal').style.display = 'none';
+};
+console.log('✅ N-Work tam hazırdır!');
+// --- YENİ FUNKSİYALAR (Email təsdiqi və Şifrə sıfırlama) ---
+
+// --- YENİ: Şifrə sıfırlama pəncərəsini açan funksiya ---
+window.resetPassword = function() {
+    document.getElementById('resetModal').style.display = 'flex';
+};
+
+// --- Şifrə sıfırlama linkini göndərən funksiya ---
+window.sendResetLink = async function() {
+    const email = document.getElementById('resetEmailInput').value.trim();
+    if (!email) {
+        showToast('⚠️ Zəhmət olmasa, email ünvanınızı daxil edin!');
+        return;
+    }
+
+    try {
+        await window.sendPasswordResetEmail(window.auth, email);
+        showToast('✅ Şifrə sıfırlama linki emailinizə göndərildi!');
+        document.getElementById('resetModal').style.display = 'none';
+        document.getElementById('resetEmailInput').value = '';
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+// 2. Qeydiyyatdan dərhal sonra Email təsdiqləmə göndər
+window.sendEmailVerification = async function() {
+    const user = window.auth.currentUser;
+    if (user) {
+        try {
+            await window.sendEmailVerification(user);
+            showToast("✅ Təsdiqləmə linki emailinizə göndərildi. Zəhmət olmasa emailinizi yoxlayın.");
+        } catch (error) {
+            showToast("❌ Xəta: " + error.message);
+        }
+    }
+};
+
+// 3. Daxil olanda emailin təsdiqlənib-təsdiqlənmədiyini yoxla
+window.checkEmailVerified = function() {
+    const user = window.auth.currentUser;
+    if (user && !user.emailVerified) {
+        showToast("⚠️ Zəhmət olmasa, əvvəlcə emailinizi təsdiqləyin!");
+        window.signOut(window.auth);
+        document.getElementById('appContainer').classList.add('hidden');
+        document.getElementById('authContainer').classList.remove('hidden');
+    }
+};
+// --- FIREBASE-LA İŞLƏYƏN YENİ RƏY FUNKSİYALARI (Bunu əlavə et) ---
+
+// 1. Rəy göndərmək
+window.submitAnonReview = async function() {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Rəy yazmaq üçün daxil olun!');
+        return;
+    }
+
+    const ratingElement = document.getElementById('anonRatingStar');
+    const reviewElement = document.getElementById('anonReviewText');
+    
+    const rating = ratingElement ? ratingElement.value : '5';
+    const reviewText = reviewElement ? reviewElement.value : '';
+
+    if (reviewText.trim() === '') {
+        showToast('⚠️ Zəhmət olmasa, şərh yazın!');
+        return;
+    }
+
+    try {
+        // Məlumatı birbaşa Firestore-a göndəririk
+        await window.addDoc(window.collection(window.db, 'reviews'), {
+            rating: Number(rating),
+            text: reviewText,
+            userId: user.uid,
+            userEmail: user.email,
+            createdAt: new Date().toISOString(),
+            timestamp: Date.now()
+        });
+
+        showToast('✅ Rəyiniz uğurla göndərildi!');
+        if (reviewElement) reviewElement.value = '';
+        
+        // Rəy göndərildikdən sonra siyahını yenilə
+        window.loadAllReviews(); 
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+// 2. Səhifə yüklənəndə və ya yeni rəy yazılanda rəyləri göstərmək
+window.loadAllReviews = async function() {
+    const container = document.getElementById('anonReviewsListContainer');
+    if (!container) return;
+
+    container.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">Yüklənir...</p>';
+
+    try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, 'reviews'));
+        let reviews = [];
+        
+        querySnapshot.forEach(doc => {
+            reviews.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Rəyləri tarixə görə tərsinə sırala (Ən yeni əvvəldə görünsün)
+        reviews.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+        if (reviews.length === 0) {
+            container.innerHTML = `<p style="color:var(--text-muted); font-size:12px;">Hələ şərh yoxdur.</p>`;
+            return;
+        }
+
+        let html = '';
+        let totalStars = 0;
+
+        reviews.forEach(r => {
+            totalStars += (r.rating || 0);
+            
+            html += `
+                <div style="border-bottom:1px solid var(--border-color); padding:10px 0; color:white;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#fbbf24; font-size:16px;">${'⭐'.repeat(r.rating || 0)}</span>
+                        <span style="font-size:11px; color:var(--text-muted);">${r.createdAt ? new Date(r.createdAt).toLocaleDateString('az-AZ') : ''}</span>
+                    </div>
+                    <p style="font-size:14px; margin:5px 0; color:#cbd5e1;">${r.text}</p>
+                    <span style="font-size:10px; color:#888;">👤 ${r.userEmail || 'Anonim'}</span>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+        // Ümumi ulduz balını hesablayıb göstərək (İstəyə bağlı)
+        const avgRating = reviews.length > 0 ? (totalStars / reviews.length).toFixed(1) : 0;
+        const ratingDisplay = document.getElementById('profileRatingDisplay');
+        if(ratingDisplay) {
+            ratingDisplay.innerHTML = `⭐${'★'.repeat(Math.round(avgRating))} (${reviews.length} səs)`;
+        }
+
+    } catch (error) {
+        container.innerHTML = `<p style="color:#ef4444; font-size:12px;">Xəta: ${error.message}</p>`;
+    }
+};
+
+// Səhifə yüklənən kimi rəyləri avtomatik yüklə
+document.addEventListener('DOMContentLoaded', function() {
+    window.loadAllReviews();
+});
+// Çat/əlaqə bölməsinə keçid funksiyası
+// --- N-Work Asistanı ilə söhbət ---
+window.startAIChat = function() {
+    // Hələlik sadə xəbərdarlıq çıxart
+    showToast("🤖 N-Work Asistanı: Salam! Nəyə kömək edim?");
+    // Input qutusunu göstər
+    document.getElementById('chatInputArea').style.display = 'flex';
+};
+
+// --- Bildirişlər tabına keçid funksiyası ---
+window.goToChat = function() {
+    const btn = document.querySelector('.nav-item[onclick*="tabNotifications"]');
+    if (btn) {
+        btn.click();
+    }
+};
+// --- N-Work Asistanı (Sual-Cavab) ---
+window.askAI = function() {
+    const input = document.getElementById('aiUserInput');
+    const msg = input.value.trim();
+    
+    if (!msg) {
+        showToast("⚠️ Zəhmət olmasa, bir sual yazın!");
+        return;
+    }
+
+    // Sualı ekrana yazdıraq (İstifadəçi mesajı kimi)
+    const body = document.querySelector('.chat-popup-body');
+    const userMsg = document.createElement('div');
+    userMsg.style.cssText = "align-self: flex-end; background: #6366f1; color: white; padding: 8px 14px; border-radius: 15px; margin: 5px 0; max-width: 80%; font-size: 14px;";
+    userMsg.textContent = msg;
+    body.insertBefore(userMsg, body.lastElementChild);
+
+    input.value = ''; // Inputu təmizlə
+
+    // Cavabı tapmaq üçün sadə məntiq
+    let answer = "Üzr istəyirəm, bunu hələ öyrənməmişəm. Amma sualınızı qeyd etdim!";
+    const lowerMsg = msg.toLowerCase();
+    if (lowerMsg.includes('salam') || lowerMsg.includes('hey') || lowerMsg.includes('necesən')) {
+    answer = "Salam! Mən N-Work Asistanıyam 🤖. Sizə necə kömək edə bilərəm?";
+} else if (lowerMsg.includes('n-work') || lowerMsg.includes('platforma') || lowerMsg.includes('bu nədir')) {
+    answer = "N-Work, Azərbaycanda peşəkar xidmətlər və bölgə elanları üçün yaradılmış bir platformadır. Burada iş elanları verə, xidmət təklif edə və digər istifadəçilərlə əlaqə saxlaya bilərsiniz!";
+} else if (lowerMsg.includes('qiymət') || lowerMsg.includes('pulsuz') || lowerMsg.includes('nə qədər')) {
+    answer = "N-Work-da elan yerləşdirmək tamamilə PULSUZDUR! Satıcı öz qiymətini istədiyi kimi təyin edə bilər. Platforma hazırda heç bir komissiya almır.";
+} else if (lowerMsg.includes('düzəlt') || lowerMsg.includes('elan sil') || lowerMsg.includes('dəyişdir')) {
+    answer = "Hazırki versiyada elanı yerləşdirdikdən sonra onu düzəltmək və ya silmək üçün xüsusi bir düymə yoxdur. Əgər elanınızda səhv varsa, lütfən 'Yeni Elan' bölməsindən təzədən paylaşın.";
+} else if (lowerMsg.includes('elan') || lowerMsg.includes('paylaş')) {
+    answer = "Elan paylaşmaq üçün aşağıdakı naviqasiyadakı ➕ düyməsinə basın. Orada kateqoriya, başlıq, qiymət və məlumat daxil edib 'Elanı Paylaş' düyməsinə basın!";
+} else if (lowerMsg.includes('mavi tik') || lowerMsg.includes('satıcı')) {
+    answer = "Mavi Tik (✅) avtomatik olaraq ilk elanınızı paylaşdığınız anda profilinizə əlavə olunur. Bu, sizi etibarlı satıcı kimi tanıdır!";
+} else if (lowerMsg.includes('qeydiyyat') || lowerMsg.includes('hesab yarat')) {
+    answer = "Qeydiyyatdan keçmək üçün 'Xoş gəldiniz!' səhifəsindəki '✨ Qeydiyyatdan Keç' düyməsinə basıb, ad, email və şifrə daxil etməlisiniz.";
+} else if (lowerMsg.includes('bildiriş') || lowerMsg.includes('mesaj harda') || lowerMsg.includes('xəbərdarlıq')) {
+    answer = "Yeni mesajlar və ya bildirişlər gələndə onları həm aşağıdakı '🔔 Bildiriş' düyməsindən, həm də yan tərəfdəki '💬 Çat' ikonundan izləyə bilərsiniz. Qırmızı rəqəmlər oxunmamış mesajların sayını göstərir!";
+} else if (lowerMsg.includes('hesab sil') || lowerMsg.includes('profil sil') || lowerMsg.includes('qeydiyyatdan çıx')) {
+    answer = "Hesabınızı silmək üçün 'Profil' səhifəsindəki 'Sistemdən Çıxış' düyməsini istifadə edin. Hazırki versiyada hesabı tamamilə silmək funksiyası hələ aktiv deyil, amma çıxış edə bilərsiniz.";
+} else if (lowerMsg.includes('qurucu') || lowerMsg.includes('sahib') || lowerMsg.includes('kim yaradıb') || lowerMsg.includes('kimsən sən')) {
+    answer = "N-Work platformasının qurucusu Nurməhəmməd İsmayıllıdır. O, Yevlax rayonunun Ərəş kəndində doğulub və hazırda Mingəçevir Dövlət Universitetində (MDU) Marketinq ixtisası üzrə 3-cü kurs tələbəsidir. Fiziki məhdudiyyətlərə (4-cü dərəcə skolyoz-kifoz) baxmayaraq, o, həyatda mübarizə aparmağı seçən bir insandır. O, həm də 'Sınmayan İradə - Üfüqdə Parlayan İşıq' və 'Sevgi Yolu' adlı kitabların müəllifidir. Onun əsas məqsədi Azərbaycan gənclərinin bir-biri ilə asanlıqla əlaqə saxlaya, iş və xidmət tapa biləcəyi etibarlı bir rəqəmsal mühit yaratmaqdır. Təklif və şikayətləriniz üçün onunla birbaşa +994513459625 nömrəsi ilə əlaqə saxlaya bilərsiniz.";
+}
+    // Cavabı ekrana yazdıraq (Asistan mesajı kimi)
+    setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.style.cssText = "align-self: flex-start; background: rgba(255,255,255,0.1); color: #e2e8f0; padding: 8px 14px; border-radius: 15px; margin: 5px 0; max-width: 80%; font-size: 14px; border: 1px solid var(--border-color);";
+        botMsg.innerHTML = `🤖 ${answer}`;
+        body.insertBefore(botMsg, body.lastElementChild);
+        // Söhbəti ən aşağıya sürüşdür
+        body.scrollTop = body.scrollHeight;
+    }, 800); // 0.8 saniyə gecikmə (sanki düşünür)
+    // Bildiriş yarat (Sınaq üçün)
+const currentUser = window.auth.currentUser;
+if (currentUser) {
+    createNotification(currentUser.uid, "🤖 AI Asistanından yeni cavab!");
+}
+};
+// ---Çat qutusunu sürüşdürmə (Draggable) ---
+document.addEventListener('DOMContentLoaded', function() {
+    const chatPopup = document.getElementById('chatPopup');
+    const chatHeader = document.getElementById('chatHeader');
+    
+    if (chatHeader && chatPopup) {
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        chatHeader.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            offsetX = e.clientX - chatPopup.offsetLeft;
+            offsetY = e.clientY - chatPopup.offsetTop;
+            chatPopup.style.transition = 'none';
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                chatPopup.style.left = (e.clientX - offsetX) + 'px';
+                chatPopup.style.top = (e.clientY - offsetY) + 'px';
+                chatPopup.style.right = 'auto';
+                chatPopup.style.bottom = 'auto';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            chatPopup.style.transition = '0.2s';
+        });
+    }
+});
+// --- Söhbətdən əsas siyahıya qayıt ---
+window.resetChatView = function() {
+    const body = document.querySelector('.chat-popup-body');
+    const inputArea = document.getElementById('chatInputArea');
+    
+    // Çat qutusunun içindəki bütün uşaqları tap
+    const children = Array.from(body.children);
+    
+    // Asistanı tap və onu saxla
+    let asistan = null;
+    let otherMessages = [];
+    
+    children.forEach(child => {
+        if (child.classList.contains('chat-list-item')) {
+            asistan = child;
+        } else {
+            otherMessages.push(child);
+        }
+    });
+    
+    // Bütün digər mesajları gizlət (sil mə!)
+    otherMessages.forEach(msg => {
+        msg.style.display = 'none';
+    });
+    
+    // Əgər söhbət siyahısı yoxdursa, onu yarat
+    let list = document.getElementById('chatUserList');
+    if (!list) {
+        const newList = document.createElement('div');
+        newList.id = 'chatUserList';
+        newList.style.cssText = "flex:1; overflow-y:auto; margin-top:5px;";
+        newList.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:30px;">Hələ heç kimlə söhbət etməmisiniz.</p>`;
+        body.appendChild(newList);
+    } else {
+        // Siyahı varsa, onu göstər
+        list.style.display = 'block';
+    }
+    
+    // Input qutusunu gizlət
+    if (inputArea) inputArea.style.display = 'none';
+};
+// --- BİLDİRİŞ RƏQƏMİ ---
+function updateNotificationBadge(count) {
+    const badge = document.getElementById('notificationBadge');
+    if (badge) {
+        if (count > 0) {
+            badge.style.display = 'flex';
+            badge.textContent = count > 99 ? '99+' : count;
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+}
+
+// Çat üçün də eyni funksiya
+function updateChatBadge(count) {
+    const badge = document.getElementById('chatBadge');
+    if (badge) {
+        if (count > 0) {
+            badge.style.display = 'flex';
+            badge.textContent = count > 99 ? '99+' : count;
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+}
+// --- BİLDİRİŞ YARATMAQ ÜÇÜN FUNKSİYA ---
+async function createNotification(userId, message) {
+    try {
+        await window.addDoc(window.collection(window.db, 'notifications'), {
+            userId: userId,
+            message: message,
+            isRead: false,
+            createdAt: new Date().toISOString(),
+            timestamp: Date.now()
+        });
+        console.log('✅ Bildiriş yaradıldı!');
+    } catch (error) {
+        console.error('❌ Bildiriş yaradılmadı:', error);
+    }
+}
+
+// --- BİLDİRİŞLƏRİ DİNLƏ (REAL-TIME) ---
+function listenNotifications() {
+    const user = window.auth.currentUser;
+    if (!user) return;
+
+    const q = window.collection(window.db, 'notifications');
+    
+    window.onSnapshot(q, (snapshot) => {
+        let unreadCount = 0;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.userId === user.uid && data.isRead === false) {
+                unreadCount++;
+            }
+        });
+        updateNotificationBadge(unreadCount);
+        console.log('📊 Oxunmamış bildiriş sayı:', unreadCount);
+    });
+}
+
+// Səhifə yüklənən kimi dinləməyə başla
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (əvvəlki DOMContentLoaded kodu varsa, onun içində)
+    listenNotifications();
+});
+// --- YENİ VƏ ƏN SON: Söhbətdən əsas siyahıya qayıt (Mesajlar silinməz!) ---
+window.resetChatView = function() {
+    const body = document.querySelector('.chat-popup-body');
+    const inputArea = document.getElementById('chatInputArea');
+
+    // Asistanı tap
+    const asistan = body.querySelector('.chat-list-item');
+    // Söhbət siyahısını tap
+    let list = document.getElementById('chatUserList');
+
+    // Bütün digər elementləri (mesajları) gizlət, silmə!
+    const children = body.children;
+    for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.id !== 'chatUserList' && !child.classList.contains('chat-list-item')) {
+            child.style.display = 'none';
+        }
+    }
+
+    // Asistanı göstər
+    if (asistan) asistan.style.display = 'flex';
+
+    // Siyahını göstər (Əgər yoxdursa yarat)
+    if (!list) {
+        const newList = document.createElement('div');
+        newList.id = 'chatUserList';
+        newList.style.cssText = "flex:1; overflow-y:auto; margin-top:5px;";
+        newList.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:30px;">Hələ heç kimlə söhbət etməmisiniz.</p>`;
+        body.appendChild(newList);
+    } else {
+        list.style.display = 'flex';
+    }
+
+    // Input qutusunu gizlət
+    if (inputArea) inputArea.style.display = 'none';
+};
+// ---Elana şərh göndərmək və yükləmək ---
+// 1. Şərhi Firestore-a göndər
+window.submitReview = async function(serviceId) {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Şərh yazmaq üçün daxil olun!');
+        return;
+    }
+
+    const input = document.getElementById(`reviewInput_${serviceId}`);
+    const text = input.value.trim();
+    if (!text) {
+        showToast('⚠️ Zəhmət olmasa, şərh yazın!');
+        return;
+    }
+
+    try {
+        await window.addDoc(window.collection(window.db, 'reviews'), {
+            serviceId: serviceId,
+            userId: user.uid,
+            userEmail: user.email,
+            text: text,
+            createdAt: new Date().toISOString(),
+            timestamp: Date.now()
+        });
+        showToast('✅ Şərh göndərildi!');
+        input.value = '';
+        // Şərhləri yenilə
+        window.loadReviewsForService(serviceId);
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+// 2. Həmin elanın şərhlərini yüklə və göstər
+window.loadReviewsForService = async function(serviceId) {
+    const container = document.getElementById(`reviewsContainer_${serviceId}`);
+    if (!container) return;
+
+    try {
+        const q = window.collection(window.db, 'reviews');
+        const snapshot = await window.getDocs(q);
+        let html = '';
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.serviceId === serviceId) {
+                html += `<div style="border-bottom:1px solid rgba(255,255,255,0.1); padding:5px 0;">
+                            <span style="font-size:11px; color:#818cf8;">👤 ${data.userEmail || 'Anonim'}</span>
+                            <p style="margin:2px 0; font-size:13px; color:#e2e8f0;">${data.text}</p>
+                         </div>`;
+            }
+        });
+        container.innerHTML = html || '<p style="color:var(--text-muted); font-size:12px;">Hələ şərh yoxdur.</p>';
+    } catch (error) {
+        container.innerHTML = '<p style="color:#ef4444;">Xəta</p>';
+    }
+};
+// --- Satıcıya mesaj göndər ---
+window.sendMessageToSeller = async function(sellerId, messageText) {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Mesaj yazmaq üçün daxil olun!');
+        return;
+    }
+
+    if (!messageText || messageText.trim() === '') {
+        showToast('⚠️ Mesaj yazın!');
+        return;
+    }
+
+    try {
+        // Söhbət ID-si: İki istifadəçinin UID-lərinin birləşməsi (Hər söhbət üçün unikal ID)
+        const chatId = [user.uid, sellerId].sort().join('_');
+
+        await window.addDoc(window.collection(window.db, 'chats'), {
+            chatId: chatId,
+            from: user.uid,
+            to: sellerId,
+            text: messageText,
+            timestamp: Date.now(),
+            isRead: false
+        });
+
+        showToast('✅ Mesaj göndərildi!');
+        // Mesajlar siyahısını yenilə (Bunu sonra edəcəyik)
+        // window.loadChatMessages(sellerId);
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+// --- Çat qutusunu aç və satıcını təyin et ---
+window.openChat = function(sellerId) {
+    const chatPopup = document.getElementById('chatPopup');
+    if (!chatPopup) {
+        showToast('⚠️ Çat qutusu tapılmadı! Səhifəni yeniləyin.');
+        return;
+    }
+// Öz elanına özün mesaj göndərə bilməz
+const currentUser = window.auth.currentUser;
+if (currentUser && currentUser.uid === sellerId) {
+    showToast('❌ Siz öz elanınıza mesaj göndərə bilməzsiniz!');
+    return;
+}
+    window.currentChatPartner = sellerId;
+    chatPopup.style.display = 'flex';
+
+    const header = document.querySelector('.chat-popup-header h4');
+    if (header) header.textContent = '💬 Satıcı ilə söhbət';
+
+    const body = document.querySelector('.chat-popup-body');
+    if (body) body.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:14px; margin-top:20px;">Söhbət yüklənir...</p>`;
+
+const inputArea = document.getElementById('chatInputArea');
+if (inputArea) {
+    inputArea.style.display = 'flex';
+    const input = document.getElementById('aiUserInput');
+    if (input) input.placeholder = 'Satıcıya mesaj yazın...';
+}
+
+// 🔥 ƏN VACİB HİSSƏ: Söhbəti avtomatik yüklə
+window.loadRealMessages(sellerId);
+};
+
+// --- Satıcıya həqiqi mesaj göndər ---
+window.sendRealMessage = async function() {
+    const user = window.auth.currentUser;
+    if (!user) {
+        showToast('❌ Mesaj yazmaq üçün daxil olun!');
+        return;
+    }
+
+    const sellerId = window.currentChatPartner;
+    if (!sellerId) {
+        showToast('⚠️ Satıcı tapılmadı! Yenidən cəhd edin.');
+        return;
+    }
+
+    const input = document.getElementById('aiUserInput');
+const messageText = input.value.trim();
+    if (!text) {
+        showToast('⚠️ Mesaj yazın!');
+        return;
+    }
+
+    try {
+        const chatId = [user.uid, sellerId].sort().join('_');
+        await window.addDoc(window.collection(window.db, 'chats'), {
+            chatId: chatId,
+            from: user.uid,
+            to: sellerId,
+            text: text,
+            timestamp: Date.now(),
+            isRead: false
+        });
+        showToast('✅ Mesaj göndərildi!');
+        input.value = '';
+        window.loadRealMessages(sellerId);
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+
+// --- Satıcı ilə olan bütün mesajları yüklə ---
+window.loadRealMessages = async function(sellerId) {
+    const user = window.auth.currentUser;
+    if (!user || !sellerId) return;
+
+    const body = document.querySelector('.chat-popup-body');
+    if (!body) return;
+
+    try {
+        const chatId = [user.uid, sellerId].sort().join('_');
+const q = window.collection(window.db, 'chats');
+        const snapshot = await window.getDocs(q);
+        let html = '';
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.chatId === chatId) {
+                const isMe = data.from === user.uid;
+                html += `
+                    <div style="align-self: ${isMe ? 'flex-end' : 'flex-start'}; background: ${isMe ? '#6366f1' : 'rgba(255,255,255,0.1)'}; color: white; padding: 8px 14px; border-radius: 15px; margin: 5px 0; max-width: 80%; font-size: 14px;">
+                        ${data.text}
+                        <div style="font-size:10px; color:rgba(255,255,255,0.5); text-align:right; margin-top:2px;">${new Date(data.timestamp).toLocaleTimeString('az-AZ')}</div>
+                    </div>
+                `;
+            }
+        });
+        body.innerHTML = html || '<p style="text-align:center; color:var(--text-muted); font-size:14px; margin-top:20px;">Hələ mesaj yoxdur.</p>';
+        body.scrollTop = body.scrollHeight;
+        updateChatBadge(1);
+    } catch (error) {
+        body.innerHTML = `<p style="text-align:center; color:#ef4444; font-size:14px; margin-top:20px;">Xəta: ${error.message}</p>`;
+    }
+};
+  // --- Elanı silmək üçün funksiya (Tik də silinir!) ---
+window.deleteMyService = async function(serviceId) {
+    try {
+        const user = window.auth.currentUser;
+        if (!user) return;
+
+        // 1. Elanı sil
+        await window.deleteDoc(window.doc(window.db, 'services', serviceId));
+        showToast('✅ Elan silindi!');
+
+        // 2. İstifadəçinin başqa elanı qalıb-qalmadığını yoxla
+        const q = window.collection(window.db, 'services');
+        const snapshot = await window.getDocs(q);
+        let hasOtherService = false;
+        snapshot.forEach(doc => {
+            if (doc.data().userId === user.uid) {
+                hasOtherService = true;
+            }
+        });
+
+        // 3. Əgər başqa elan yoxdursa, Mavi Tik-i sil
+        if (!hasOtherService) {
+            const userSnapshot = await window.getDocs(window.collection(window.db, 'users'));
+            userSnapshot.forEach(async (doc) => {
+                if (doc.data().uid === user.uid) {
+                    await window.updateDoc(window.doc(window.db, 'users', doc.id), { 
+                        isSeller: false 
+                    });
+                    showToast('⚠️ Mavi Tik silindi! (Artıq satıcı deyilsiniz)');
+                }
+            });
+        }
+
+        // Səhifəni yenilə
+        window.loadHomeServices();
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+// --- AĞILLI GÖNDƏR: Asistan və ya Satıcıya mesaj göndər ---
+window.sendSmartMessage = function() {
+    const header = document.querySelector('.chat-popup-header h4');
+    const headerText = header ? header.textContent : '';
+
+    if (headerText.includes('Satıcı')) {
+        // Əgər başlıqda "Satıcı" yazılıbsa, satıcıya göndər
+        window.sendRealMessage();
+    } else {
+        // Əks halda, Asistana göndər
+        window.askAI();
+    }
+};
+  // --- Sil pəncərəsini açan funksiya ---
+window.openDeleteModal = function(serviceId) {
+    // Silinəcək elanın ID-sini gizli saxla
+    window.pendingDeleteId = serviceId;
+    // Pəncərəni aç
+    document.getElementById('deleteConfirmModal').style.display = 'flex';
+};
+
+// --- Əsl silmə əməliyyatını icra edən funksiya ---
+window.executeDelete = function() {
+    const id = window.pendingDeleteId;
+    if (id) {
+        window.deleteMyService(id);
+        document.getElementById('deleteConfirmModal').style.display = 'none';
+    }
+};
+  window.executeSearch = async function() {
+    const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+    const category = document.getElementById('searchCategory').value;
+    const container = document.getElementById('searchServicesContainer');
+    
+    container.innerHTML = '<p style="color:var(--text-muted);">Axtarılır...</p>';
+
+    try {
+        const snapshot = await window.getDocs(window.collection(window.db, 'services'));
+        let results = [];
+        
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id; 
+            
+            // Açar sözə görə yoxlama (Başlıqda və ya təsvirdə)
+            const matchesKeyword = !keyword || 
+                data.name?.toLowerCase().includes(keyword) ||
+                data.description?.toLowerCase().includes(keyword);
+            
+            // Kateqoriyaya görə yoxlama
+            const matchesCategory = category === 'Hamısı' || data.category === category;
+
+            if (matchesKeyword && matchesCategory) {
+                results.push(data);
+            }
+        });
+
+        if (results.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-muted);">Heç nə tapılmadı. Açar sözü və ya kateqoriyanı dəyişin.</p>';
+            return;
+        }
+
+        // Nəticələri göstər
+        let html = '';
+        results.forEach(data => {
+            html += `
+                <div class="card">
+                    <h3>${data.name || 'Adsız'}</h3>
+                    <span class="status-badge status-pending">${data.category || ''}</span>
+                    <p style="font-size:14px;color:var(--text-muted);margin:8px 0;">${data.description || ''}</p>
+                    <div><span class="price">${data.price || ''}</span></div>
+                    ${data.phone ? `<div style="margin-top:10px;">
+                        <a href="https://wa.me/994${data.phone.replace(/[^0-9]/g, '')}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:6px 15px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:bold;">📲 WhatsApp</a>
+                        <button onclick="window.openChat('${data.userId}')" style="display:inline-block; background:#6366f1; color:white; padding:6px 15px; border-radius:8px; border:none; font-size:13px; font-weight:bold;">💬 Chat</button>
+                    </div>` : ''}
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = '<p style="color:#ef4444;">Xəta: ' + error.message + '</p>';
+    }
+};
+  window.loadNotifications = async function() {
+    const user = window.auth.currentUser;
+    if (!user) return;
+
+    const container = document.getElementById('notificationsListContainer');
+    container.innerHTML = '<p style="color:var(--text-muted);">Yüklənir...</p>';
+
+    try {
+        const snapshot = await window.getDocs(window.collection(window.db, 'notifications'));
+        let notifications = [];
+        
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.userId === user.uid) {
+                notifications.push(data);
+            }
+        });
+
+        // Ən yenidən köhnəyə doğru sırala
+        notifications.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+        if (notifications.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-muted);">Hələ bildiriş yoxdur.</p>';
+            return;
+        }
+
+        let html = '';
+        notifications.forEach(notif => {
+            html += `
+                <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:10px; margin-bottom:8px; border-left:4px solid #6366f1;">
+                    <p style="margin:0; color:#e2e8f0; font-size:14px;">${notif.message || 'Bildiriş'}</p>
+                    <span style="font-size:11px; color:var(--text-muted);">${notif.createdAt ? new Date(notif.createdAt).toLocaleString('az-AZ') : ''}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    } catch (error) {
+        container.innerHTML = '<p style="color:#ef4444;">Xəta: ' + error.message + '</p>';
+    }
+};
+  window.uploadProfileImage = async function(inputElement) {
+    const user = window.auth.currentUser;
+    if (!user) { showToast('❌ Daxil olun!'); return; }
+
+    const file = inputElement.files[0];
+    if (!file) return;
+
+    // Faylın ölçüsünü yoxla (Maksimum 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+        showToast('⚠️ Şəkil 2MB-dan kiçik olmalıdır!');
+        return;
+    }
+
+    try {
+        showToast('⏳ Şəkil yüklənir...');
+        
+        // Şəkli Firebase Storage-a yüklə
+        const storageRef = window.ref(window.storage, 'profile_pics/' + user.uid + '.jpg');
+        await window.uploadBytes(storageRef, file);
+        
+        // Yüklənmiş şəklin linkini al
+        const downloadURL = await window.getDownloadURL(storageRef);
+
+        // Bu linki Firestore-dakı 'users' kolleksiyasında yadda saxla
+        const querySnapshot = await window.getDocs(window.collection(window.db, 'users'));
+        querySnapshot.forEach(async (doc) => {
+            if (doc.data().uid === user.uid) {
+                await window.updateDoc(window.doc(window.db, 'users', doc.id), { 
+                    photoURL: downloadURL 
+                });
+            }
+        });
+
+        showToast('✅ Profil şəkli yeniləndi!');
+        window.loadUserProfile(); // Dərhal profili yenilə
+    } catch (error) {
+        showToast('❌ Xəta: ' + error.message);
+    }
+};
+</script>
+<!-- TƏBRİK PƏNCƏRƏSİ (MODAL) -->
+<div id="successModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(145deg, #1e293b, #0f172a); padding:30px; border-radius:25px; text-align:center; max-width:90%; border:2px solid rgba(255,215,0,0.5); box-shadow:0 0 60px rgba(255,215,0,0.2); animation: fadeIn 0.5s ease;">
+        <div style="font-size:70px; margin-bottom:10px;">🎉</div>
+        <!-- QIZILI RƏNGDƏ BÖYÜK YAZI -->
+        <h2 id="modalUserName" style="color: #fbbf24; font-size:24px; font-weight:bold; margin:10px 0; text-shadow: 0 0 20px rgba(251,191,36,0.6);">Təbriklər, Ad Soyad!</h2>
+        <p style="color: #e2e8f0; font-size:16px; margin-top:5px;">Satışlarınız xeyirli, uğurlu və bərəkətli olsun!</p>
+        <!-- ✅ MAVİ TİK -->
+        <div style="font-size:50px; margin:15px 0;">✅</div>
+        <p style="color: #94a3b8; font-size:13px; margin-top:-5px;">Profilinizə Mavi Tik əlavə olundu!</p>
+        <!-- TAMAM DÜYMƏSİ -->
+        <button onclick="window.closeSuccessModal()" style="margin-top:20px; background:linear-gradient(135deg, #6366f1, #a855f7); border:none; color:white; padding:12px 40px; border-radius:30px; font-size:16px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 15px rgba(99,102,241,0.5);">Tamam</button>
+    </div>
+</div>
+<!-- --- ÜZƏN ÇAT İKONU VƏ QUTUSU (Təmiz və səliqəli) --- -->
+<button class="floating-chat-btn" onclick="document.getElementById('chatPopup').style.display='flex'; this.style.display='none';" style="position:relative;">
+    💬
+    <span id="chatBadge" class="badge-chat" style="display:none;">0</span>
+</button>
+
+<div id="chatPopup" class="chat-popup" style="display:none; position:fixed; bottom:170px; right:20px; width:380px; max-width:95%; height:600px; max-height:70vh; background:rgba(30,41,59,0.95); backdrop-filter:blur(15px); border:1px solid var(--border-color); border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.6); flex-direction:column; overflow:hidden; z-index:9999;">
+
+    <!-- Başlıq -->
+    <div id="chatHeader" class="chat-popup-header" style="cursor:grab; display:flex; justify-content:space-between; align-items:center; padding:15px; background:rgba(15,23,42,0.8); border-bottom:1px solid var(--border-color);">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <button onclick="window.resetChatView()" style="background:none; border:none; color:#818cf8; font-size:20px; cursor:pointer; padding:0;">‹</button>
+            <h4 style="color:#fff; margin:0; font-size:16px;">💬 N-Work Çat</h4>
+        </div>
+        <button class="chat-popup-close" onclick="document.getElementById('chatPopup').style.display='none'; document.querySelector('.floating-chat-btn').style.display='flex';" style="background:none; border:none; color:#ef4444; font-size:22px; cursor:pointer;">✕</button>
+    </div>
+
+    <!-- Gövdə -->
+    <div class="chat-popup-body" style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+        <div class="chat-list-item" onclick="window.startAIChat()" style="cursor:pointer; display:flex; align-items:center; gap:10px; padding:10px; border-radius:10px; background:rgba(255,255,255,0.05); margin-bottom:8px; border:1px solid var(--border-color);">
+            <div style="width:40px; height:40px; border-radius:50%; background:var(--primary-gradient); display:flex; align-items:center; justify-content:center; font-size:20px;">🤖</div>
+            <div style="flex:1;">
+                <div style="font-weight:600; color:#fff; font-size:15px;">N-Work Asistanı</div>
+                <div style="font-size:12px; color:var(--text-muted);">Sual ver, mən cavab verim!</div>
+            </div>
+        </div>
+        <div id="chatUserList" style="flex:1; overflow-y:auto; margin-top:5px;">
+            <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-top:30px;">Hələ heç kimlə söhbət etməmisiniz.</p>
+        </div>
+    </div>
+
+    <!-- Input -->
+    <div id="chatInputArea" class="chat-popup-input-area" style="display:none; padding:10px; border-top:1px solid var(--border-color);">
+        <input type="text" id="aiUserInput" placeholder="Mesaj yazın..." style="flex:1; padding:8px 12px; border-radius:20px; border:1px solid var(--border-color); background:rgba(0,0,0,0.2); color:white; outline:none; font-size:14px; margin:0;">
+        <button onclick="window.sendSmartMessage()" style="background:var(--primary-gradient); color:white; border:none; padding:0 15px; border-radius:20px; cursor:pointer;">Göndər</button>
+    </div>
+</div>
+<!-- QUTU BURADA BAĞLANIR! -->
+  <!-- --- ELAN SİLMƏK ÜÇÜN TƏSDİQ PƏNCƏRƏSİ --- -->
+<div id="deleteConfirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(145deg, #1e293b, #0f172a); padding:30px; border-radius:20px; text-align:center; max-width:90%; border:1px solid rgba(255,255,255,0.1); box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+        <div style="font-size:40px; margin-bottom:10px;">⚠️</div>
+        <h3 style="color:#fff; margin:0 0 5px 0;">Elanı silmək istəyirsiniz?</h3>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">Bu əməliyyat geri qaytarıla bilməz.</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <!-- LƏĞV ET DÜYMƏSİ (Bağlayır) -->
+            <button onclick="document.getElementById('deleteConfirmModal').style.display='none'" style="background:rgba(255,255,255,0.1); border:none; color:white; padding:10px 25px; border-radius:8px; cursor:pointer; font-size:14px;">Silmə</button>
+            <!-- TƏSDİQ ET DÜYMƏSİ (Əsas funksiyanı işlədir) -->
+            <button id="confirmDeleteBtn" onclick="window.executeDelete()" style="background:var(--danger-gradient); border:none; color:white; padding:10px 25px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:bold;">Sil</button>
+        </div>
+    </div>
+</div>
+  <!-- --- ŞİFRƏ SIFIRLAMA PƏNCƏRƏSİ --- -->
+<div id="resetModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(145deg, #1e293b, #0f172a); padding:30px; border-radius:20px; text-align:center; max-width:90%; border:1px solid rgba(255,255,255,0.1); box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+        <div style="font-size:40px; margin-bottom:10px;">🔑</div>
+        <h3 style="color:#fff; margin:0 0 5px 0;">Şifrəni sıfırla</h3>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:15px;">Email ünvanınızı daxil edin, şifrə sıfırlama linki göndəriləcək.</p>
+        <input type="email" id="resetEmailInput" placeholder="Email ünvanınız..." style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--border-color); background:rgba(0,0,0,0.3); color:white; outline:none; font-size:14px; margin-bottom:15px;">
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="document.getElementById('resetModal').style.display='none'" style="background:rgba(255,255,255,0.1); border:none; color:white; padding:10px 25px; border-radius:8px; cursor:pointer; font-size:14px;">Ləğv et</button>
+            <button onclick="window.sendResetLink()" style="background:var(--primary-gradient); border:none; color:white; padding:10px 25px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:bold;">Göndər</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
